@@ -11,15 +11,15 @@ use std::fs;
 use rand::*;
 
 pub struct Keys{
-    pub public : String,
-    pub private : String,
+    pub public_string : String,
+    pub private_string : String,
     pub public_key : RsaPublicKey,
     pub private_key : RsaPrivateKey
 }
 
 impl std::fmt::Display for Keys{
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}\n{}", self.public, self.private)
+        write!(f, "{}\n{}", self.public_string, self.private_string)
     }
 }
 
@@ -37,8 +37,10 @@ pub fn generate_public_private_keys(bits : usize, to_file : bool) -> Keys{
     }
 
     Keys { 
-        public: str_public_key, 
-        private: str_private_key 
+        public_string: str_public_key, 
+        private_string: str_private_key,
+        public_key : public_key,
+        private_key : private_key
     }
 }
 
