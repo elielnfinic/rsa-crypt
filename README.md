@@ -64,7 +64,7 @@ From Google search :) : RSA encryption, in full Rivest-Shamir-Adleman encryption
 ## Read more
 
 Here is my [Twitter](https://twitter.com/elielmathe)  
-Here is my [Blog](https://el.nfinic.com)  
+Here is my [Blog](https://eliel.nfinic.com)  
 Here is my [email](eliel@nfinic.com)  
 
 ## Contribute 
