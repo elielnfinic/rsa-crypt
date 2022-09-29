@@ -1,0 +1,34 @@
+use std::io::Read;
+
+use rsa::{PublicKey, RsaPrivateKey, RsaPublicKey, PaddingScheme, pkcs1::EncodeRsaPrivateKey, pkcs8::{EncodePrivateKey, EncodePublicKey}};
+use rand::*;
+
+fn main() {
+    let input : i32 = 302;
+
+    let mut rng = rand::thread_rng();
+
+    let bits = 256;
+    let private_key = RsaPrivateKey::new(&mut rng, bits).expect("failed to generate a key");
+    let public_key = RsaPublicKey::from(&private_key);
+    let data = input.to_be_bytes();
+    println!("To encrypt : {:?}", &data);
+    let padding = PaddingScheme::new_pkcs1v15_encrypt();
+    
+    let enc_data = public_key.encrypt(&mut rng, padding, &data[..]).expect("failed to encrypt");
+
+    let str_private_key = private_key.to_pkcs8_pem(rsa::pkcs8::LineEnding::default()).unwrap().to_string();
+    println!("\nPrivate key {}\n", str_private_key);
+    let str_public_key = public_key.to_public_key_pem(rsa::pkcs8::LineEnding::default()).unwrap().to_string();
+    println!("\nPublic key {}\n", str_public_key);
+    
+    //Decrypt data 
+    let padding = PaddingScheme::new_pkcs1v15_encrypt();
+    let decry_data = private_key.decrypt(padding, &enc_data).unwrap();
+    
+    let bytes_len = decry_data.len();
+    let slice : &[u8; 4] = decry_data[0 .. 4].try_into().unwrap();
+    println!("The slice is {:?}", slice);
+    println!("Decrypted {:?}",i32::from_be_bytes(*slice));
+    
+}
